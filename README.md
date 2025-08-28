@@ -1,7 +1,6 @@
 # Retrocausal Spin Communication Web Application
 # retrocausal_spin
 
-[![License](https://img.shields.io/github/license/ttracx/retrocausal_spin)](https://github.com/ttracx/retrocausal_spin/blob/main/LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/ttracx/retrocausal_spin)](https://github.com/ttracx/retrocausal_spin/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/ttracx/retrocausal_spin)](https://github.com/ttracx/retrocausal_spin/network/members)
 [![GitHub issues](https://img.shields.io/github/issues/ttracx/retrocausal_spin)](https://github.com/ttracx/retrocausal_spin/issues)
