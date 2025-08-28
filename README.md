@@ -13,6 +13,14 @@ This web application demonstrates the theoretical concepts of retrocausal spin-b
 - Fixed-point iteration algorithms for temporal consistency
 - Visual representation of quantum spin state evolution
 - Real-time convergence analysis and performance metrics
+  
+## Whitepaper
+
+The main whitepaper for this project is included in the repository:
+
+- [Retrocausal Whitepaper (PDF)](retrocausal_whitepaper_overleaf.pdf)
+
+Please refer to the whitepaper for a detailed explanation of the retrocausal spin model, theoretical background, and results.
 
 ## Educational Philosophy
 
