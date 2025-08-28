@@ -35,7 +35,7 @@ a:hover { text-decoration:underline }
 
 .header img {
   max-height:200px;
-  height:auto;
+  height:100;
   width:auto;
 }
 
