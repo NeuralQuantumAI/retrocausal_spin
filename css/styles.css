@@ -1,0 +1,611 @@
+/**
+ * Educational Animations and Transitions
+ * 
+ * This stylesheet provides smooth, purposeful animations that enhance the
+ * educational experience without being distracting. Each animation serves
+ * a specific pedagogical purpose to help users understand complex concepts.
+ * 
+ * Animation Principles:
+ * - Purpose-driven: Every animation teaches or guides
+ * - Smooth and professional: No jarring or distracting movements
+ * - Accessible: Respects prefers-reduced-motion settings
+ * - Performance-optimized: Uses transform and opacity for smooth 60fps
+ * 
+ * Author: Tommy Xaypanya, NeuralQuantum.ai
+ */
+
+/* ===== KEYFRAME DEFINITIONS ===== */
+
+/* Fade in animation for content appearance */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Slide in from left for step-by-step reveals */
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Slide in from right for step-by-step reveals */
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Pulse animation for highlighting important elements */
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.05);
+        opacity: 0.8;
+    }
+}
+
+/* Gentle breathing animation for active states */
+@keyframes breathe {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.02);
+    }
+}
+
+/* Spin animation for spin state visualization */
+@keyframes spinFlip {
+    0% {
+        transform: rotateY(0deg);
+    }
+    50% {
+        transform: rotateY(90deg);
+    }
+    100% {
+        transform: rotateY(180deg);
+    }
+}
+
+/* Shimmer effect for loading states */
+@keyframes shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+/* Bounce animation for successful convergence */
+@keyframes bounceSuccess {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+/* Wave animation for error correction demonstration */
+@keyframes wave {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+/* Glow animation for highlighting corrected bits */
+@keyframes glow {
+    0%, 100% {
+        box-shadow: 0 0 5px rgba(255, 193, 7, 0.5);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(255, 193, 7, 0.8), 0 0 30px rgba(255, 193, 7, 0.6);
+    }
+}
+
+/* Progress bar fill animation */
+@keyframes fillProgress {
+    from {
+        width: 0%;
+    }
+    to {
+        width: 100%;
+    }
+}
+
+/* Typing animation for text reveals */
+@keyframes typing {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
+    }
+}
+
+/* Rotation animation for convergence indicator */
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Scale up animation for emphasis */
+@keyframes scaleUp {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* ===== ANIMATION CLASSES ===== */
+
+/* Basic entrance animations */
+.animate-fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+}
+
+.animate-slide-in-left {
+    animation: slideInLeft 0.5s ease-out forwards;
+}
+
+.animate-slide-in-right {
+    animation: slideInRight 0.5s ease-out forwards;
+}
+
+.animate-scale-up {
+    animation: scaleUp 0.4s ease-out forwards;
+}
+
+/* State-based animations */
+.animate-pulse {
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.animate-breathe {
+    animation: breathe 3s ease-in-out infinite;
+}
+
+.animate-bounce-success {
+    animation: bounceSuccess 0.8s ease-in-out;
+}
+
+/* Interactive element animations */
+.animate-hover-lift {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.animate-hover-lift:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Button press animation */
+.animate-button-press {
+    transition: all 0.1s ease;
+}
+
+.animate-button-press:active {
+    transform: scale(0.98);
+}
+
+/* ===== EDUCATIONAL ANIMATION CLASSES ===== */
+
+/* Hamming encoding step-by-step animation */
+.animated-bit {
+    animation: slideInLeft 0.5s ease-out forwards;
+    opacity: 0;
+}
+
+.animated-bit:nth-child(1) { animation-delay: 0s; }
+.animated-bit:nth-child(2) { animation-delay: 0.15s; }
+.animated-bit:nth-child(3) { animation-delay: 0.3s; }
+.animated-bit:nth-child(4) { animation-delay: 0.45s; }
+.animated-bit:nth-child(5) { animation-delay: 0.6s; }
+.animated-bit:nth-child(6) { animation-delay: 0.75s; }
+.animated-bit:nth-child(7) { animation-delay: 0.9s; }
+
+/* Parity relationship highlighting */
+.parity-related {
+    animation: pulse 1s ease-in-out;
+    background-color: var(--warning-amber) !important;
+    transform: scale(1.1);
+    z-index: 10;
+    position: relative;
+}
+
+/* Error correction highlighting */
+.error-detected {
+    animation: pulse 0.5s ease-in-out, glow 2s ease-in-out;
+    background-color: var(--error-red) !important;
+}
+
+.error-corrected {
+    animation: bounceSuccess 0.8s ease-in-out, glow 3s ease-in-out;
+    background-color: var(--accent-orange) !important;
+}
+
+/* Spin state animations */
+.spin-element {
+    transition: all 0.3s ease;
+}
+
+.spin-flip {
+    animation: spinFlip 0.6s ease-in-out;
+}
+
+.spin-element:hover {
+    transform: scale(1.15) rotate(5deg);
+    filter: brightness(1.1);
+}
+
+/* Convergence process animations */
+.convergence-step {
+    opacity: 0;
+    animation: fadeIn 0.4s ease-out forwards;
+}
+
+.convergence-step.active {
+    animation: pulse 1s ease-in-out infinite;
+    border: 2px solid var(--accent-green);
+}
+
+.converged {
+    animation: bounceSuccess 1s ease-in-out;
+    background: linear-gradient(45deg, var(--accent-green), #66BB6A);
+    color: white;
+}
+
+/* Loading and progress animations */
+.loading-shimmer {
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(255, 255, 255, 0.4) 50%, 
+        transparent 100%);
+    background-size: 200px 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+.progress-bar {
+    height: 4px;
+    background: var(--light-gray);
+    border-radius: 2px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progress-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary-blue), var(--secondary-blue));
+    animation: fillProgress 2s ease-out forwards;
+    width: 0%;
+}
+
+/* Status indicator animations */
+.status-ready {
+    color: var(--accent-green);
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.status-running {
+    color: var(--warning-amber);
+    animation: breathe 1s ease-in-out infinite;
+}
+
+.status-converged {
+    color: var(--success-green);
+    animation: bounceSuccess 0.8s ease-in-out;
+}
+
+.status-iterating {
+    color: var(--primary-blue);
+}
+
+.status-iterating::after {
+    content: '';
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin-left: 8px;
+    border: 2px solid var(--primary-blue);
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: rotate 1s linear infinite;
+}
+
+/* Chart and graph animations */
+.chart-element {
+    opacity: 0;
+    animation: fadeIn 0.8s ease-out forwards;
+}
+
+.chart-line {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    animation: drawLine 2s ease-out forwards;
+}
+
+@keyframes drawLine {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+.chart-point {
+    opacity: 0;
+    animation: scaleUp 0.3s ease-out forwards;
+}
+
+.chart-point:nth-child(1) { animation-delay: 0.2s; }
+.chart-point:nth-child(2) { animation-delay: 0.4s; }
+.chart-point:nth-child(3) { animation-delay: 0.6s; }
+.chart-point:nth-child(4) { animation-delay: 0.8s; }
+.chart-point:nth-child(5) { animation-delay: 1.0s; }
+
+/* Tutorial and guided tour animations */
+.tutorial-highlight {
+    position: relative;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.tutorial-highlight::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    border: 3px solid var(--warning-amber);
+    border-radius: var(--radius-lg);
+    animation: pulse 2s ease-in-out infinite;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.tutorial-arrow {
+    position: relative;
+    animation: bounce 1s ease-in-out infinite;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+/* Welcome message animation */
+.welcome-message {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+.welcome-content {
+    background: white;
+    padding: var(--space-xxl);
+    border-radius: var(--radius-lg);
+    max-width: 500px;
+    text-align: center;
+    animation: scaleUp 0.6s ease-out forwards;
+    box-shadow: var(--shadow-lg);
+}
+
+.welcome-actions {
+    display: flex;
+    gap: var(--space-md);
+    justify-content: center;
+    margin-top: var(--space-lg);
+}
+
+.tutorial-button, .explore-button {
+    padding: var(--space-md) var(--space-lg);
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+}
+
+.tutorial-button {
+    background: var(--primary-blue);
+    color: white;
+}
+
+.explore-button {
+    background: var(--medium-gray);
+    color: white;
+}
+
+.tutorial-button:hover {
+    background: var(--secondary-blue);
+    transform: translateY(-2px);
+}
+
+.explore-button:hover {
+    background: var(--dark-gray);
+    transform: translateY(-2px);
+}
+
+/* Error and success message animations */
+.error-message {
+    background: var(--error-red);
+    color: white;
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+    animation: slideInRight 0.5s ease-out, fadeIn 0.5s ease-out;
+    box-shadow: var(--shadow-md);
+}
+
+.success-message {
+    background: var(--success-green);
+    color: white;
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+    animation: slideInRight 0.5s ease-out, fadeIn 0.5s ease-out;
+    box-shadow: var(--shadow-md);
+}
+
+/* Metric counter animations */
+.metric-value {
+    transition: all 0.3s ease;
+}
+
+.metric-value.updating {
+    animation: pulse 0.5s ease-in-out;
+    color: var(--warning-amber);
+}
+
+.metric-value.updated {
+    animation: bounceSuccess 0.6s ease-in-out;
+    color: var(--success-green);
+}
+
+/* ===== SEQUENTIAL ANIMATION UTILITIES ===== */
+
+/* Staggered animation delays for groups of elements */
+.stagger-children > * {
+    opacity: 0;
+    animation: fadeIn 0.6s ease-out forwards;
+}
+
+.stagger-children > *:nth-child(1) { animation-delay: 0.1s; }
+.stagger-children > *:nth-child(2) { animation-delay: 0.2s; }
+.stagger-children > *:nth-child(3) { animation-delay: 0.3s; }
+.stagger-children > *:nth-child(4) { animation-delay: 0.4s; }
+.stagger-children > *:nth-child(5) { animation-delay: 0.5s; }
+.stagger-children > *:nth-child(6) { animation-delay: 0.6s; }
+.stagger-children > *:nth-child(7) { animation-delay: 0.7s; }
+.stagger-children > *:nth-child(8) { animation-delay: 0.8s; }
+
+/* ===== ACCESSIBILITY CONSIDERATIONS ===== */
+
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    /* Disable animations that could cause discomfort */
+    .animate-pulse,
+    .animate-breathe,
+    .status-ready,
+    .status-running,
+    .tutorial-highlight,
+    .tutorial-arrow {
+        animation: none;
+    }
+    
+    /* Convert motion animations to simple transitions */
+    .animated-bit,
+    .animate-fade-in,
+    .animate-slide-in-left,
+    .animate-slide-in-right,
+    .animate-scale-up {
+        animation: none;
+        opacity: 1;
+        transform: none;
+    }
+    
+    /* Keep functional animations but make them faster */
+    .error-corrected,
+    .converged,
+    .status-converged {
+        animation-duration: 0.2s;
+    }
+    
+    /* Preserve essential feedback animations but reduce intensity */
+    .animate-button-press:active {
+        transform: scale(0.99);
+    }
+    
+    .animate-hover-lift:hover {
+        transform: translateY(-1px);
+    }
+}
+
+/* ===== PERFORMANCE OPTIMIZATIONS ===== */
+
+/* Use hardware acceleration for smooth animations */
+.animate-pulse,
+.animate-breathe,
+.spin-element,
+.animated-bit,
+.chart-element {
+    will-change: transform, opacity;
+}
+
+/* Remove will-change after animations complete */
+.animation-complete {
+    will-change: auto;
+}
+
+/* ===== CUSTOM EASING FUNCTIONS ===== */
+
+:root {
+    /* Custom easing for educational animations */
+    --ease-out-back: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    --ease-in-out-circ: cubic-bezier(0.785, 0.135, 0.15, 0.86);
+    --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+    --ease-educational: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Apply educational easing to key animations */
+.educational-animation {
+    animation-timing-function: var(--ease-educational);
+}
+
+.success-animation {
+    animation-timing-function: var(--ease-out-back);
+}
+
+.smooth-transition {
+    transition-timing-function: var(--ease-out-expo);
+}

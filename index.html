@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retrocausal Spin Communication Simulator | NeuralQuantum.ai</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/animations.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">RetroSpin Simulator</h1>
+            <nav class="nav">
+                <a href="#theory" class="nav-link">Theory</a>
+                <a href="#simulator" class="nav-link">Simulator</a>
+                <a href="#analysis" class="nav-link">Analysis</a>
+                <a href="#docs" class="nav-link">Documentation</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <!-- Hero Section -->
+        <section class="hero" id="intro">
+            <div class="container">
+                <h1 class="hero-title">Interactive Retrocausal Spin Communication</h1>
+                <p class="hero-subtitle">
+                    Explore the theoretical framework for information transmission through closed timelike curves
+                    with integrated Hamming(7,4) error correction and fixed-point consistency enforcement.
+                </p>
+                <div class="hero-author">
+                    <strong>Tommy Xaypanya</strong> - Chief AI & Quantum Systems Officer, NeuralQuantum.ai
+                </div>
+                <button class="cta-button" onclick="scrollToSimulator()">Begin Exploration</button>
+            </div>
+        </section>
+
+        <!-- Theory Overview -->
+        <section class="section" id="theory">
+            <div class="container">
+                <h2 class="section-title">Theoretical Foundation</h2>
+                <div class="theory-grid">
+                    <div class="theory-card">
+                        <h3>Closed Timelike Curves</h3>
+                        <p>Mathematical structures in spacetime that permit information flow backward in time, constrained by Deutsch's consistency condition to prevent paradoxes.</p>
+                        <div class="ascii-diagram">
+                            <pre>
+t1 ═════════════════► t0
+    Backward Channel
+
+t0 ◄═════════════════ t1  
+    Forward Channel
+                            </pre>
+                        </div>
+                    </div>
+                    <div class="theory-card">
+                        <h3>Error Correction Integration</h3>
+                        <p>Hamming(7,4) codes adapted for temporal transmission, encoding 4 information bits into 7 total bits with single-error correction capability.</p>
+                        <div class="bit-pattern">
+                            <span class="parity-bit">P</span>
+                            <span class="parity-bit">P</span>
+                            <span class="data-bit">D</span>
+                            <span class="parity-bit">P</span>
+                            <span class="data-bit">D</span>
+                            <span class="data-bit">D</span>
+                            <span class="data-bit">D</span>
+                        </div>
+                    </div>
+                    <div class="theory-card">
+                        <h3>Fixed-Point Consistency</h3>
+                        <p>Iterative algorithms that find quantum states satisfying ρ = U_CTC ρ U_CTC†, ensuring temporal self-consistency through convergence to stable solutions.</p>
+                        <div class="convergence-indicator">
+                            <div class="iteration-step">Initialize</div>
+                            <div class="iteration-arrow">↓</div>
+                            <div class="iteration-step">Evolve</div>
+                            <div class="iteration-arrow">↓</div>
+                            <div class="iteration-step">Check</div>
+                            <div class="iteration-arrow iteration-loop">↺</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Simulator -->
+        <section class="section simulator-section" id="simulator">
+            <div class="container">
+                <h2 class="section-title">Interactive Simulator</h2>
+                
+                <!-- Control Panel -->
+                <div class="control-panel">
+                    <div class="control-group">
+                        <h3>Input Configuration</h3>
+                        <div class="input-bits">
+                            <label>Information Bits (4-bit):</label>
+                            <div class="bit-inputs">
+                                <input type="checkbox" id="bit0" class="bit-checkbox" onchange="updateSimulation()">
+                                <label for="bit0">Bit 0</label>
+                                <input type="checkbox" id="bit1" class="bit-checkbox" onchange="updateSimulation()">
+                                <label for="bit1">Bit 1</label>
+                                <input type="checkbox" id="bit2" class="bit-checkbox" onchange="updateSimulation()">
+                                <label for="bit2">Bit 2</label>
+                                <input type="checkbox" id="bit3" class="bit-checkbox" onchange="updateSimulation()">
+                                <label for="bit3">Bit 3</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <h3>Simulation Parameters</h3>
+                        <div class="parameter-controls">
+                            <div class="parameter">
+                                <label for="error-rate">Error Rate:</label>
+                                <input type="range" id="error-rate" min="0" max="0.3" step="0.01" value="0.05" onchange="updateSimulation()">
+                                <span id="error-rate-value">5%</span>
+                            </div>
+                            <div class="parameter">
+                                <label for="max-iterations">Max Iterations:</label>
+                                <input type="range" id="max-iterations" min="10" max="200" step="10" value="100" onchange="updateSimulation()">
+                                <span id="max-iterations-value">100</span>
+                            </div>
+                            <div class="parameter">
+                                <label for="tolerance">Convergence Tolerance:</label>
+                                <select id="tolerance" onchange="updateSimulation()">
+                                    <option value="1e-3">10⁻³</option>
+                                    <option value="1e-6" selected>10⁻⁶</option>
+                                    <option value="1e-9">10⁻⁹</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <button class="simulate-button" onclick="runSimulation()">Run Simulation</button>
+                        <button class="reset-button" onclick="resetSimulation()">Reset</button>
+                        <button class="step-button" onclick="stepSimulation()">Single Step</button>
+                    </div>
+                </div>
+
+                <!-- Visualization Area -->
+                <div class="visualization-container">
+                    <!-- Hamming Encoding Display -->
+                    <div class="visualization-panel">
+                        <h3>Hamming(7,4) Encoding</h3>
+                        <div class="encoding-display">
+                            <div class="bit-chain" id="encoding-chain">
+                                <!-- Dynamic content populated by JavaScript -->
+                            </div>
+                            <div class="encoding-explanation" id="encoding-explanation">
+                                <p>Enter information bits above to see Hamming encoding in action.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Fixed-Point Iteration Display -->
+                    <div class="visualization-panel">
+                        <h3>Fixed-Point Iteration Progress</h3>
+                        <div class="iteration-display">
+                            <canvas id="convergence-canvas" width="600" height="300"></canvas>
+                            <div class="iteration-stats" id="iteration-stats">
+                                <div class="stat">
+                                    <label>Current Iteration:</label>
+                                    <span id="current-iteration">0</span>
+                                </div>
+                                <div class="stat">
+                                    <label>Convergence Error:</label>
+                                    <span id="convergence-error">N/A</span>
+                                </div>
+                                <div class="stat">
+                                    <label>Status:</label>
+                                    <span id="convergence-status">Ready</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quantum State Visualization -->
+                    <div class="visualization-panel">
+                        <h3>Quantum Spin State Evolution</h3>
+                        <div class="spin-visualization" id="spin-visualization">
+                            <div class="spin-chain">
+                                <!-- Dynamic content for spin states -->
+                            </div>
+                            <div class="spin-legend">
+                                <div class="legend-item">
+                                    <div class="spin-up"></div>
+                                    <span>Spin Up (|0⟩)</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="spin-down"></div>
+                                    <span>Spin Down (|1⟩)</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="spin-mixed"></div>
+                                    <span>Mixed State</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Performance Analysis -->
+        <section class="section" id="analysis">
+            <div class="container">
+                <h2 class="section-title">Performance Analysis</h2>
+                <div class="analysis-grid">
+                    <div class="analysis-panel">
+                        <h3>Error Correction Effectiveness</h3>
+                        <canvas id="error-correction-chart" width="400" height="200"></canvas>
+                        <div class="chart-description">
+                            <p>Real-time analysis of error correction performance across different error rates, showing the dramatic improvement provided by Hamming(7,4) encoding.</p>
+                        </div>
+                    </div>
+                    <div class="analysis-panel">
+                        <h3>Convergence Statistics</h3>
+                        <div class="convergence-metrics">
+                            <div class="metric">
+                                <h4>Success Rate</h4>
+                                <div class="metric-value" id="success-rate">0%</div>
+                            </div>
+                            <div class="metric">
+                                <h4>Average Iterations</h4>
+                                <div class="metric-value" id="avg-iterations">0</div>
+                            </div>
+                            <div class="metric">
+                                <h4>Final Fidelity</h4>
+                                <div class="metric-value" id="final-fidelity">0.000</div>
+                            </div>
+                        </div>
+                        <button class="analysis-button" onclick="runBenchmark()">Run Benchmark</button>
+                    </div>
+                    <div class="analysis-panel">
+                        <h3>Information Capacity</h3>
+                        <div class="capacity-analysis">
+                            <div class="capacity-metric">
+                                <label>Theoretical Capacity:</label>
+                                <span id="theoretical-capacity">4.00 bits</span>
+                            </div>
+                            <div class="capacity-metric">
+                                <label>Practical Capacity:</label>
+                                <span id="practical-capacity">3.89 bits</span>
+                            </div>
+                            <div class="capacity-metric">
+                                <label>Efficiency:</label>
+                                <span id="capacity-efficiency">97.2%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Educational Resources -->
+        <section class="section resources-section" id="docs">
+            <div class="container">
+                <h2 class="section-title">Educational Resources</h2>
+                <div class="resources-grid">
+                    <div class="resource-card">
+                        <h3>Interactive Tutorial</h3>
+                        <p>Step-by-step walkthrough of retrocausal communication concepts with hands-on exercises and visual explanations.</p>
+                        <button class="resource-button" onclick="loadTutorial()">Start Tutorial</button>
+                    </div>
+                    <div class="resource-card">
+                        <h3>Mathematical Derivations</h3>
+                        <p>Complete mathematical framework including fixed-point theory proofs and error correction analysis.</p>
+                        <button class="resource-button" onclick="showMathematicalFramework()">Explore Math</button>
+                    </div>
+                    <div class="resource-card">
+                        <h3>Full Whitepaper</h3>
+                        <p>Comprehensive technical documentation of the retrocausal spin communication framework and implementation.</p>
+                        <button class="resource-button" onclick="viewWhitepaper()">Read Paper</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>About</h4>
+                    <p>Retrocausal Spin Communication Simulator - An educational exploration of temporal information theory.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="#theory">Theory Overview</a></li>
+                        <li><a href="#simulator">Interactive Simulator</a></li>
+                        <li><a href="docs/whitepaper.md">Full Whitepaper</a></li>
+                        <li><a href="examples/">Code Examples</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Citation</h4>
+                    <p>Xaypanya, T. (2025). Retrocausal Spin-Based Communication Systems. NeuralQuantum.ai</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Tommy Xaypanya, NeuralQuantum.ai. Educational use permitted with attribution.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Modules -->
+    <script src="js/utils.js"></script>
+    <script src="js/hamming.js"></script>
+    <script src="js/fixedpoint.js"></script>
+    <script src="js/visualization.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

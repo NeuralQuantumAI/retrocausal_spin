@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retrocausal Communication Test Suite</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: #1976D2;
+            margin-bottom: 30px;
+            text-align: center;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #4CAF50;
+        }
+
+        .test-controls {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .test-controls h2 {
+            color: #1976D2;
+            margin-bottom: 15px;
+        }
+
+        .control-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .run-tests {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .run-tests:hover {
+            background: #45A049;
+        }
+
+        .run-single {
+            background: #2196F3;
+            color: white;
+        }
+
+        .run-single:hover {
+            background: #1976D2;
+        }
+
+        .clear-results {
+            background: #757575;
+            color: white;
+        }
+
+        .clear-results:hover {
+            background: #616161;
+        }
+
+        .test-results {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .results-header {
+            background: #1976D2;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .results-summary {
+            display: flex;
+            gap: 20px;
+            font-weight: 600;
+        }
+
+        .pass-count {
+            color: #4CAF50;
+        }
+
+        .fail-count {
+            color: #F44336;
+        }
+
+        .results-content {
+            padding: 20px;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        .test-suite {
+            margin-bottom: 30px;
+        }
+
+        .test-suite h3 {
+            color: #1976D2;
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid #E0E0E0;
+        }
+
+        .test-result {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            margin-bottom: 5px;
+            border-radius: 4px;
+            border-left: 4px solid transparent;
+        }
+
+        .test-result.pass {
+            background: #E8F5E8;
+            border-left-color: #4CAF50;
+        }
+
+        .test-result.fail {
+            background: #FFEBEE;
+            border-left-color: #F44336;
+        }
+
+        .test-name {
+            flex: 1;
+        }
+
+        .test-status {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .test-status.pass {
+            color: #4CAF50;
+        }
+
+        .test-status.fail {
+            color: #F44336;
+        }
+
+        .error-details {
+            margin-top: 10px;
+            padding: 10px;
+            background: #FFF3E0;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 12px;
+            color: #E65100;
+            white-space: pre-wrap;
+        }
+
+        .performance-stats {
+            background: #F3E5F5;
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 20px;
+        }
+
+        .performance-stats h4 {
+            color: #7B1FA2;
+            margin-bottom: 10px;
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+
+        .loading::after {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #ddd;
+            border-radius: 50%;
+            border-top-color: #1976D2;
+            animation: spin 1s ease-in-out infinite;
+            margin-left: 10px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .control-group {
+                flex-direction: column;
+            }
+
+            .results-summary {
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .test-result {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Retrocausal Spin Communication Test Suite</h1>
+        
+        <div class="test-controls">
+            <h2>Test Controls</h2>
+            <div class="control-group">
+                <button class="run-tests" onclick="runAllTests()">Run All Tests</button>
+                <button class="run-single" onclick="runHammingTests()">Run Hamming Tests</button>
+                <button class="run-single" onclick="runFixedPointTests()">Run Fixed-Point Tests</button>
+                <button class="clear-results" onclick="clearResults()">Clear Results</button>
+            </div>
+            <p><strong>Test Coverage:</strong> Hamming(7,4) error correction, fixed-point iteration algorithm, mathematical properties verification, and performance characteristics.</p>
+        </div>
+
+        <div class="test-results" id="test-results">
+            <div class="results-header">
+                <h2>Test Results</h2>
+                <div class="results-summary" id="results-summary">
+                    <span>Ready to run tests</span>
+                </div>
+            </div>
+            <div class="results-content" id="results-content">
+                <p>Click "Run All Tests" to begin the comprehensive test suite, or run individual test suites to focus on specific components.</p>
+                <div class="performance-stats">
+                    <h4>About the Tests</h4>
+                    <p><strong>Hamming Code Tests:</strong> Verify encoding/decoding accuracy, error correction capabilities, and mathematical properties of the Hamming(7,4) code.</p>
+                    <p><strong>Fixed-Point Tests:</strong> Validate convergence behavior, temporal consistency enforcement, and integration with error correction systems.</p>
+                    <p><strong>Performance Tests:</strong> Measure computational efficiency and memory usage characteristics.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load all required modules -->
+    <script src="../js/utils.js"></script>
+    <script src="../js/hamming.js"></script>
+    <script src="../js/fixedpoint.js"></script>
+    <script src="hamming.test.js"></script>
+    <script src="fixedpoint.test.js"></script>
+
+    <script>
+        let allTestResults = [];
+
+        function updateResultsDisplay(results, suiteName) {
+            const resultsContent = document.getElementById('results-content');
+            const resultsSummary = document.getElementById('results-summary');
+            
+            // Create test suite section
+            const suiteDiv = document.createElement('div');
+            suiteDiv.className = 'test-suite';
+            
+            const suiteTitle = document.createElement('h3');
+            suiteTitle.textContent = `${suiteName} (${results.passed} passed, ${results.failed} failed)`;
+            suiteDiv.appendChild(suiteTitle);
+            
+            // Add individual test results
+            results.results.forEach(result => {
+                const testDiv = document.createElement('div');
+                testDiv.className = `test-result ${result.status.toLowerCase()}`;
+                
+                const testName = document.createElement('div');
+                testName.className = 'test-name';
+                testName.textContent = result.name;
+                testDiv.appendChild(testName);
+                
+                const testStatus = document.createElement('div');
+                testStatus.className = `test-status ${result.status.toLowerCase()}`;
+                testStatus.textContent = result.status;
+                testDiv.appendChild(testStatus);
+                
+                if (result.error) {
+                    const errorDetails = document.createElement('div');
+                    errorDetails.className = 'error-details';
+                    errorDetails.textContent = result.error;
+                    testDiv.appendChild(errorDetails);
+                }
+                
+                suiteDiv.appendChild(testDiv);
+            });
+            
+            // Add to results or replace existing
+            const existingSuite = document.querySelector(`[data-suite="${suiteName}"]`);
+            if (existingSuite) {
+                existingSuite.replaceWith(suiteDiv);
+            } else {
+                if (resultsContent.children.length === 1) {
+                    resultsContent.innerHTML = ''; // Clear initial message
+                }
+                resultsContent.appendChild(suiteDiv);
+            }
+            suiteDiv.setAttribute('data-suite', suiteName);
+            
+            // Update overall summary
+            updateOverallSummary();
+        }
+
+        function updateOverallSummary() {
+            const resultsSummary = document.getElementById('results-summary');
+            let totalPassed = 0;
+            let totalFailed = 0;
+            let totalTime = 0;
+            
+            allTestResults.forEach(result => {
+                totalPassed += result.passed;
+                totalFailed += result.failed;
+                totalTime += result.duration || 0;
+            });
+            
+            if (totalPassed > 0 || totalFailed > 0) {
+                resultsSummary.innerHTML = `
+                    <span class="pass-count">✓ ${totalPassed} Passed</span>
+                    <span class="fail-count">✗ ${totalFailed} Failed</span>
+                    <span>Time: ${totalTime.toFixed(2)}ms</span>
+                `;
+            }
+        }
+
+        function showLoading() {
+            const resultsContent = document.getElementById('results-content');
+            resultsContent.innerHTML = '<div class="loading">Running tests...</div>';
+        }
+
+        function addPerformanceStats(duration, suiteName) {
+            const resultsContent = document.getElementById('results-content');
+            const perfDiv = document.createElement('div');
+            perfDiv.className = 'performance-stats';
+            perfDiv.innerHTML = `
+                <h4>${suiteName} Performance</h4>
+                <div class="stat-row">
+                    <span>Total Execution Time:</span>
+                    <span>${duration.toFixed(2)}ms</span>
+                </div>
+                <div class="stat-row">
+                    <span>Tests per Second:</span>
+                    <span>${(1000 / duration * (allTestResults[allTestResults.length - 1]?.passed + allTestResults[allTestResults.length - 1]?.failed || 1)).toFixed(0)}</span>
+                </div>
+            `;
+            resultsContent.appendChild(perfDiv);
+        }
+
+        async function runHammingTests() {
+            console.log('Starting Hamming Code Tests...');
+            showLoading();
+            
+            const startTime = performance.now();
+            const hammingTests = new HammingCodeTests();
+            const results = hammingTests.run();
+            const duration = performance.now() - startTime;
+            
+            results.duration = duration;
+            allTestResults = allTestResults.filter(r => r.suiteName !== 'Hamming Code Tests');
+            allTestResults.push({ ...results, suiteName: 'Hamming Code Tests' });
+            
+            updateResultsDisplay(results, 'Hamming Code Tests');
+            addPerformanceStats(duration, 'Hamming Code');
+            
+            return results;
+        }
+
+        async function runFixedPointTests() {
+            console.log('Starting Fixed-Point Algorithm Tests...');
+            showLoading();
+            
+            const startTime = performance.now();
+            const fixedPointTests = new FixedPointSolverTests();
+            const results = fixedPointTests.run();
+            const duration = performance.now() - startTime;
+            
+            results.duration = duration;
+            allTestResults = allTestResults.filter(r => r.suiteName !== 'Fixed-Point Algorithm Tests');
+            allTestResults.push({ ...results, suiteName: 'Fixed-Point Algorithm Tests' });
+            
+            updateResultsDisplay(results, 'Fixed-Point Algorithm Tests');
+            addPerformanceStats(duration, 'Fixed-Point Algorithm');
+            
+            return results;
+        }
+
+        async function runAllTests() {
+            console.log('Starting Complete Test Suite...');
+            clearResults();
+            showLoading();
+            
+            const totalStartTime = performance.now();
+            
+            try {
+                // Run Hamming tests
+                await runHammingTests();
+                
+                // Add small delay for visual feedback
+                await new Promise(resolve => setTimeout(resolve, 100));
+                
+                // Run Fixed-Point tests
+                await runFixedPointTests();
+                
+                const totalDuration = performance.now() - totalStartTime;
+                
+                // Add overall summary
+                const resultsContent = document.getElementById('results-content');
+                const summaryDiv = document.createElement('div');
+                summaryDiv.className = 'performance-stats';
+                summaryDiv.innerHTML = `
+                    <h4>Complete Test Suite Summary</h4>
+                    <div class="stat-row">
+                        <span>Total Tests:</span>
+                        <span>${allTestResults.reduce((sum, r) => sum + r.passed + r.failed, 0)}</span>
+                    </div>
+                    <div class="stat-row">
+                        <span>Overall Success Rate:</span>
+                        <span>${(allTestResults.reduce((sum, r) => sum + r.passed, 0) / allTestResults.reduce((sum, r) => sum + r.passed + r.failed, 1) * 100).toFixed(1)}%</span>
+                    </div>
+                    <div class="stat-row">
+                        <span>Total Execution Time:</span>
+                        <span>${totalDuration.toFixed(2)}ms</span>
+                    </div>
+                `;
+                resultsContent.appendChild(summaryDiv);
+                
+                console.log('All tests completed successfully');
+                
+            } catch (error) {
+                console.error('Test suite encountered an error:', error);
+                const resultsContent = document.getElementById('results-content');
+                resultsContent.innerHTML = `
+                    <div class="test-result fail">
+                        <div class="test-name">Test Suite Error</div>
+                        <div class="test-status fail">FAIL</div>
+                        <div class="error-details">${error.message}</div>
+                    </div>
+                `;
+            }
+        }
+
+        function clearResults() {
+            allTestResults = [];
+            document.getElementById('results-content').innerHTML = '<p>Test results will appear here...</p>';
+            document.getElementById('results-summary').innerHTML = '<span>Ready to run tests</span>';
+        }
+
+        // Auto-run tests on load if requested
+        window.addEventListener('load', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('autorun') === 'true') {
+                setTimeout(runAllTests, 1000); // Small delay for page setup
+            }
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey || e.metaKey) {
+                switch (e.key) {
+                    case 'r':
+                        e.preventDefault();
+                        runAllTests();
+                        break;
+                    case '1':
+                        e.preventDefault();
+                        runHammingTests();
+                        break;
+                    case '2':
+                        e.preventDefault();
+                        runFixedPointTests();
+                        break;
+                    case 'l':
+                        e.preventDefault();
+                        clearResults();
+                        break;
+                }
+            }
+        });
+    </script>
+</body>
+</html>

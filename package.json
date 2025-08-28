@@ -1,0 +1,152 @@
+{
+  "name": "retrocausal-spin-communication",
+  "version": "1.0.0",
+  "description": "Interactive educational demonstration of retrocausal spin-based communication systems with Hamming(7,4) error correction and fixed-point temporal consistency enforcement",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8080",
+    "start-node": "npx http-server -p 8080 -c-1",
+    "test": "open tests/test-runner.html?autorun=true",
+    "test-server": "python -m http.server 8080 && open http://localhost:8080/tests/test-runner.html",
+    "build": "echo 'No build step required - vanilla HTML/CSS/JS'",
+    "lint": "eslint js/*.js tests/*.js",
+    "validate": "html5validator *.html tests/*.html examples/*.html",
+    "serve": "python -m http.server 8080"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/neuralquantum-ai/retrocausal-spin-communication.git"
+  },
+  "keywords": [
+    "retrocausality",
+    "quantum-information",
+    "error-correction",
+    "hamming-code",
+    "fixed-point-theory",
+    "temporal-communication",
+    "educational-simulation",
+    "quantum-mechanics",
+    "theoretical-physics",
+    "interactive-demonstration"
+  ],
+  "author": {
+    "name": "Tommy Xaypanya",
+    "email": "tommy@neuralquantum.ai",
+    "organization": "NeuralQuantum.ai"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=14.0.0",
+    "python": ">=3.6.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.0.0",
+    "html5validator": "^0.4.0",
+    "http-server": "^14.0.0"
+  },
+  "browserslist": [
+    "last 2 versions",
+    "not dead",
+    "> 1%",
+    "maintained node versions"
+  ],
+  "files": [
+    "index.html",
+    "css/",
+    "js/",
+    "tests/",
+    "examples/",
+    "docs/",
+    "assets/",
+    "README.md",
+    "LICENSE"
+  ],
+  "homepage": "https://neuralquantum-ai.github.io/retrocausal-spin-communication/",
+  "bugs": {
+    "url": "https://github.com/neuralquantum-ai/retrocausal-spin-communication/issues"
+  },
+  "funding": {
+    "type": "research",
+    "url": "https://neuralquantum.ai/research"
+  },
+  "config": {
+    "port": 8080,
+    "test_timeout": 30000
+  },
+  "educational": {
+    "level": "advanced-undergraduate",
+    "topics": [
+      "quantum-information-theory",
+      "error-correction-codes",
+      "temporal-mechanics",
+      "fixed-point-mathematics",
+      "theoretical-physics"
+    ],
+    "prerequisites": [
+      "linear-algebra",
+      "probability-theory",
+      "basic-quantum-mechanics",
+      "javascript-programming"
+    ],
+    "learning_objectives": [
+      "Understand Hamming(7,4) error correction principles",
+      "Explore fixed-point iteration in temporal systems",
+      "Visualize quantum state evolution processes",
+      "Analyze convergence properties of retrocausal systems",
+      "Connect mathematical theory to interactive simulations"
+    ]
+  },
+  "technical_specifications": {
+    "browser_requirements": {
+      "chrome": ">=80",
+      "firefox": ">=75",
+      "safari": ">=13",
+      "edge": ">=80"
+    },
+    "features_used": [
+      "ES6+ JavaScript",
+      "Canvas 2D API",
+      "CSS Grid and Flexbox",
+      "CSS Custom Properties",
+      "Web Performance API",
+      "Local File System Access (optional)"
+    ],
+    "performance": {
+      "target_load_time": "< 2 seconds",
+      "target_interaction_response": "< 100ms",
+      "memory_usage": "< 50MB typical",
+      "supported_concurrent_simulations": 5
+    }
+  },
+  "citation": {
+    "title": "Interactive Retrocausal Spin Communication Simulator",
+    "authors": ["Tommy Xaypanya"],
+    "organization": "NeuralQuantum.ai",
+    "year": 2025,
+    "type": "Educational Software",
+    "format": "APA",
+    "example": "Xaypanya, T. (2025). Interactive Retrocausal Spin Communication Simulator [Computer software]. NeuralQuantum.ai. https://github.com/neuralquantum-ai/retrocausal-spin-communication"
+  },
+  "disclaimer": {
+    "purpose": "Educational and theoretical exploration only",
+    "physical_realizability": "This software demonstrates theoretical concepts that may not be physically realizable with current or foreseeable technology",
+    "accuracy": "Mathematical algorithms implement published theoretical frameworks accurately",
+    "scope": "Intended for educational use in advanced physics and mathematics courses"
+  },
+  "contribution_guidelines": {
+    "code_style": "Standard JavaScript with clear documentation",
+    "testing": "All new features must include comprehensive tests",
+    "documentation": "Educational focus - explain both how and why",
+    "pull_requests": "Include educational rationale and theoretical validation"
+  },
+  "future_enhancements": [
+    "Additional error correction codes (BCH, Reed-Solomon)",
+    "3D quantum state visualizations",
+    "Multi-user collaborative exploration",
+    "Integration with quantum computing simulators",
+    "Advanced statistical analysis tools",
+    "Mobile-optimized interface",
+    "Accessibility improvements",
+    "Internationalization support"
+  ]
+}

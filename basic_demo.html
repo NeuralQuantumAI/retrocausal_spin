@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic Retrocausal Communication Demo</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+            line-height: 1.6;
+        }
+        
+        .demo-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            color: #1976D2;
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+        
+        .input-section, .results-section {
+            margin: 20px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            border-left: 4px solid #2196F3;
+        }
+        
+        .bit-input {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin: 10px 0;
+            flex-wrap: wrap;
+        }
+        
+        .bit-checkbox {
+            width: 20px;
+            height: 20px;
+            accent-color: #1976D2;
+        }
+        
+        .demo-button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            margin: 10px 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .demo-button:hover {
+            background: #45A049;
+            transform: translateY(-2px);
+        }
+        
+        .step {
+            margin: 15px 0;
+            padding: 15px;
+            background: white;
+            border-radius: 6px;
+            border-left: 4px solid #FF9800;
+        }
+        
+        .step-title {
+            font-weight: 600;
+            color: #F57C00;
+            margin-bottom: 8px;
+        }
+        
+        .bit-display {
+            font-family: monospace;
+            font-size: 18px;
+            background: #e3f2fd;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+            text-align: center;
+        }
+        
+        .error-demo {
+            background: #ffebee;
+            border-left-color: #f44336;
+        }
+        
+        .success-demo {
+            background: #e8f5e8;
+            border-left-color: #4caf50;
+        }
+        
+        .explanation {
+            background: #fff3e0;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 20px 0;
+            border-left: 4px solid #ff9800;
+        }
+        
+        .convergence-display {
+            background: #f3e5f5;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 10px 0;
+        }
+        
+        .iteration-step {
+            display: flex;
+            justify-content: space-between;
+            margin: 5px 0;
+            padding: 8px;
+            background: white;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <h1>Basic Retrocausal Communication Demonstration</h1>
+        
+        <div class="explanation">
+            <h3>What This Demonstrates</h3>
+            <p>This simple example shows the key components of retrocausal spin communication:</p>
+            <ol>
+                <li><strong>Information Encoding:</strong> Convert bits to quantum spin states</li>
+                <li><strong>Error Correction:</strong> Apply Hamming(7,4) encoding for protection</li>
+                <li><strong>Temporal Transmission:</strong> Simulate passage through closed timelike curve</li>
+                <li><strong>Fixed-Point Convergence:</strong> Find self-consistent quantum states</li>
+                <li><strong>Information Recovery:</strong> Decode the final consistent state</li>
+            </ol>
+        </div>
+
+        <div class="input-section">
+            <h3>Step 1: Input Your Information</h3>
+            <p>Select 4 bits of information to transmit through the retrocausal channel:</p>
+            <div class="bit-input">
+                <label><input type="checkbox" id="bit0" class="bit-checkbox"> Bit 0</label>
+                <label><input type="checkbox" id="bit1" class="bit-checkbox"> Bit 1</label>
+                <label><input type="checkbox" id="bit2" class="bit-checkbox"> Bit 2</label>
+                <label><input type="checkbox" id="bit3" class="bit-checkbox"> Bit 3</label>
+            </div>
+            <div class="bit-display" id="input-display">0000</div>
+            <button class="demo-button" onclick="runDemo()">Run Retrocausal Transmission</button>
+            <button class="demo-button" onclick="runWithErrors()" style="background: #FF9800;">Add Transmission Errors</button>
+        </div>
+
+        <div class="results-section" id="results" style="display: none;">
+            <h3>Transmission Results</h3>
+            <div id="demo-steps"></div>
+        </div>
+    </div>
+
+    <!-- Load required modules -->
+    <script src="../js/hamming.js"></script>
+    <script src="../js/fixedpoint.js"></script>
+
+    <script>
+        // Initialize components
+        const hamming = new HammingCode();
+        const solver = new RetrocausalFixedPointSolver(hamming);
+        
+        // Update input display when checkboxes change
+        document.querySelectorAll('.bit-checkbox').forEach((checkbox, index) => {
+            checkbox.addEventListener('change', updateInputDisplay);
+        });
+        
+        function updateInputDisplay() {
+            const bits = [];
+            document.querySelectorAll('.bit-checkbox').forEach((checkbox, index) => {
+                bits[index] = checkbox.checked ? 1 : 0;
+            });
+            document.getElementById('input-display').textContent = bits.join('');
+        }
+        
+        function getCurrentBits() {
+            const bits = [];
+            document.querySelectorAll('.bit-checkbox').forEach((checkbox, index) => {
+                bits[index] = checkbox.checked ? 1 : 0;
+            });
+            return bits;
+        }
+        
+        function runDemo() {
+            const inputBits = getCurrentBits();
+            showResults();
+            
+            const steps = document.getElementById('demo-steps');
+            steps.innerHTML = '';
+            
+            // Step 1: Show input
+            addStep('Input Information', `Original bits: ${inputBits.join('')}`, 'step');
+            
+            // Step 2: Hamming encoding
+            const encoded = hamming.encode(inputBits);
+            addStep('Hamming(7,4) Encoding', 
+                `7-bit codeword: ${encoded.join('')}<br>
+                 Added 3 parity bits for error correction`, 'step');
+            
+            // Step 3: Simulate retrocausal transmission
+            addStep('Retrocausal Transmission', 
+                'Sending information through closed timelike curve...<br>' +
+                'Applying temporal consistency constraints', 'step');
+            
+            // Step 4: Fixed-point solving
+            const result = solver.solveFixedPoint(inputBits, {
+                maxIterations: 20,
+                convergenceTolerance: 1e-4,
+                errorRate: 0.0
+            });
+            
+            showConvergenceProcess(result);
+            
+            // Step 5: Show final result
+            if (result.converged) {
+                addStep('Success!', 
+                    `✅ Found self-consistent state after ${result.iterations} iterations<br>
+                     Final state: ${result.finalState.join('')}<br>
+                     Convergence error: ${result.finalError.toExponential(2)}`, 'success-demo');
+            } else {
+                addStep('Convergence Failed', 
+                    `❌ Could not find self-consistent state within ${result.iterations} iterations<br>
+                     This can happen with high error rates or tight tolerances`, 'error-demo');
+            }
+        }
+        
+        function runWithErrors() {
+            const inputBits = getCurrentBits();
+            showResults();
+            
+            const steps = document.getElementById('demo-steps');
+            steps.innerHTML = '';
+            
+            addStep('Input Information', `Original bits: ${inputBits.join('')}`, 'step');
+            
+            const encoded = hamming.encode(inputBits);
+            addStep('Hamming(7,4) Encoding', 
+                `7-bit codeword: ${encoded.join('')}`, 'step');
+            
+            // Inject errors
+            const noisyCodeword = hamming.injectErrors(encoded, 0.15);
+            const errorPositions = [];
+            for (let i = 0; i < 7; i++) {
+                if (encoded[i] !== noisyCodeword[i]) {
+                    errorPositions.push(i);
+                }
+            }
+            
+            if (errorPositions.length > 0) {
+                addStep('Transmission Errors Occurred!', 
+                    `Noisy received: ${noisyCodeword.join('')}<br>
+                     Errors at positions: ${errorPositions.join(', ')}<br>
+                     <em>This is where error correction becomes crucial</em>`, 'error-demo');
+            }
+            
+            // Error correction
+            const decoded = hamming.decode(noisyCodeword);
+            if (decoded.errorDetected) {
+                addStep('Error Correction Success', 
+                    `✅ Hamming code detected and corrected error at position ${decoded.errorPosition}<br>
+                     Corrected codeword: ${decoded.correctedCodeword.join('')}<br>
+                     Recovered data: ${decoded.dataBits.join('')}`, 'success-demo');
+            } else {
+                addStep('No Errors Detected', 
+                    `No errors found in transmission<br>
+                     Decoded data: ${decoded.dataBits.join('')}`, 'step');
+            }
+            
+            // Fixed-point solving with errors
+            const result = solver.solveFixedPoint(inputBits, {
+                maxIterations: 30,
+                convergenceTolerance: 1e-3,
+                errorRate: 0.15
+            });
+            
+            showConvergenceProcess(result);
+            
+            if (result.converged) {
+                addStep('Retrocausal Success with Error Correction!', 
+                    `✅ Despite transmission errors, the system converged after ${result.iterations} iterations<br>
+                     Error correction effectiveness: ${(result.errorCorrectionStats.correctionEfficiency * 100).toFixed(1)}%<br>
+                     Final consistent state: ${result.finalState.join('')}`, 'success-demo');
+            } else {
+                addStep('Convergence Challenged by Errors', 
+                    `The high error rate made convergence difficult<br>
+                     Reached ${result.iterations} iterations without full convergence<br>
+                     This demonstrates the importance of error correction in retrocausal systems`, 'error-demo');
+            }
+        }
+        
+        function addStep(title, content, className = 'step') {
+            const steps = document.getElementById('demo-steps');
+            const stepDiv = document.createElement('div');
+            stepDiv.className = className;
+            stepDiv.innerHTML = `
+                <div class="step-title">${title}</div>
+                <div>${content}</div>
+            `;
+            steps.appendChild(stepDiv);
+        }
+        
+        function showConvergenceProcess(result) {
+            const convergenceDiv = document.createElement('div');
+            convergenceDiv.className = 'convergence-display';
+            convergenceDiv.innerHTML = '<h4>Fixed-Point Iteration Process</h4>';
+            
+            if (result.convergenceHistory.length > 0) {
+                result.convergenceHistory.slice(0, 8).forEach((step, i) => {
+                    const iterDiv = document.createElement('div');
+                    iterDiv.className = 'iteration-step';
+                    iterDiv.innerHTML = `
+                        <span>Iteration ${step.iteration}</span>
+                        <span>State: ${step.state.join('')}</span>
+                        <span>Error: ${step.convergenceError.toFixed(6)}</span>
+                    `;
+                    convergenceDiv.appendChild(iterDiv);
+                });
+                
+                if (result.convergenceHistory.length > 8) {
+                    const moreDiv = document.createElement('div');
+                    moreDiv.className = 'iteration-step';
+                    moreDiv.innerHTML = `<span colspan="3">... ${result.convergenceHistory.length - 8} more iterations ...</span>`;
+                    convergenceDiv.appendChild(moreDiv);
+                }
+            }
+            
+            document.getElementById('demo-steps').appendChild(convergenceDiv);
+        }
+        
+        function showResults() {
+            document.getElementById('results').style.display = 'block';
+        }
+        
+        // Initialize display
+        updateInputDisplay();
+        
+        // Auto-run a simple demo on load
+        setTimeout(() => {
+            document.getElementById('bit0').checked = true;
+            document.getElementById('bit2').checked = true;
+            updateInputDisplay();
+        }, 500);
+    </script>
+</body>
+</html>
